@@ -5,3 +5,33 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+.imagen{
+    border: 1px black solid;
+    width: 100vh;
+    height: 100vh;
+}
+
+.loginZone{
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    border-radius: 5%;
+    max-width: 40%;
+    height: 560px;
+    margin-top: 2%;
+    margin-right: 2%;
+
+}
+
+.shadows-into-light-regular {
+    font-family: "Shadows Into Light", cursive;
+    font-weight: 800;
+    font-size: 70px;
+    font-style: normal;
+  }
+  
+.fondoForm{
+    background: rgb(174,238,207);
+    background: radial-gradient(circle, rgba(174,238,207,1) 0%, rgba(177,183,219,1) 23%, rgba(194,180,217,1) 54%, rgba(148,187,233,1) 86%);
+}
+
+  

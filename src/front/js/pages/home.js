@@ -1,26 +1,75 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
+import Despo1 from "../../img/Despo1.jpg";
 import "../../styles/home.css";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	const [inputUSuario, SetInputUsuario] = useState({
+		email: "",
+		password: ""
+	})
+
+	const handleChange = (evento) => {
+		console.log('evento.target: ', evento.target.value);
+		const { id, value } = evento.target;
+		SetInputUsuario(copiaDelUsuario => ({
+			...copiaDelUsuario,
+			[id]: value
+		}))
+
+	}
+
+	const handleSubmit = (evento) => {
+		evento.preventDefault()
+		console.log('usuario', inputUSuario);
+		actions.obtenerToken(inputUSuario)
+	}
+
+
+	const backgroundStyle = {
+		backgroundImage: `url(${Despo1})`,
+		backgroundSize: 'contain', // Ajusta la imagen para que se vea completa sin deformarse
+		// backgroundPosition: 'center',
+		backgroundRepeat: 'repeat',
+		minHeight: '100vh',
+		width: '100%',
+		overflow: 'hidden' // Asegura que no haya scroll
+	};
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+		<div className="container-fluid" style={backgroundStyle}>
+			<div className="row d-flex">
+				<div className="col ">
+
+				</div>
+				<div className="col loginZone fondoForm">
+					<h1 className="text-center mt-1 shadows-into-light-regular">Bienvenidos</h1>
+					<div className="mt-5 ">
+						<form onSubmit={handleSubmit}>
+							<div className="mb-3">
+								<label htmlFor="email" className="text-start">Usuario (email)</label>
+								<input type="text" className="form-control" id="email" aria-describedby="emailHelp" onChange={handleChange} />
+							</div>
+							<div className="mb-3">
+								<label htmlFor="password" className="form-label">Contraseña</label>
+								<input type="password" className="form-control" id="password" onChange={handleChange} />
+							</div>
+							<button type="submit" className="btn btn-primary">Dentro</button>
+						</form>
+
+						<div className="mt-5">
+							<button type="button" class="btn btn-primary">Registro</button>
+						</div>
+						
+					</div>
+
+
+				</div>
+
 			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
+
 		</div>
 	);
 };
