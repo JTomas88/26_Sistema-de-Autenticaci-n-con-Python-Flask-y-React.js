@@ -30,10 +30,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return respuesta.json();
 				}).then(datosRespuesta => {
 					console.log('respuesta del servicio: '+datosRespuesta);
+					return datosRespuesta
 				}).catch(esError => {
 					console.log('Error: '+ esError);
 				})
 			},
+
+			guardarUsuario: async (usuario) => {
+				return await fetch ('https://supreme-bassoon-pxxjj54wgj62vv5-3001.app.github.dev/api/guardarUsuario', {
+					method: 'POST',
+					headers: {
+						'Content-Type':'application/json'
+					},
+					body: JSON.stringify(usuario)
+				}).then(respuesta => {
+					if(!respuesta.ok) {
+						throw new Error ('No fue ok ' + respuesta.statusText)
+					}
+					return respuesta.json();
+				}).then(datosRespuesta => {
+					console.log('respuesta del servicio: '+datosRespuesta);
+				}).catch(esError => {
+					console.log('Error: '+ esError);
+				})
+			},
+					
+			
 			
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
@@ -52,6 +74,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

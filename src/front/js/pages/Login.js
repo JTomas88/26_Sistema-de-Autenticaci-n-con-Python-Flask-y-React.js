@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Context } from "../store/appContext";
 import Despo1 from "../../img/Despo1.jpg";
 import "../../styles/home.css";
 
-export const Home = () => {
+export const Login = () => {
 	const { store, actions } = useContext(Context);
+	const privada = useNavigate()
 
 	const [inputUSuario, SetInputUsuario] = useState({
 		email: "",
@@ -24,7 +26,15 @@ export const Home = () => {
 	const handleSubmit = (evento) => {
 		evento.preventDefault()
 		console.log('usuario', inputUSuario);
-		actions.obtenerToken(inputUSuario)
+		actions.obtenerToken(inputUSuario).then(respuestaServicio => {
+			console.log(respuestaServicio);
+			if (respuestaServicio.token) {
+				privada ("/private") 
+			}
+
+			
+		})
+
 	}
 
 
@@ -60,7 +70,7 @@ export const Home = () => {
 						</form>
 
 						<div className="mt-5">
-							<button type="button" class="btn btn-primary">Registro</button>
+							<button  type="button" className="btn btn-primary"> <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit' }}>Registro</Link></button>
 						</div>
 						
 					</div>

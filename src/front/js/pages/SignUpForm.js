@@ -1,34 +1,50 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from 'react-router-dom';
+
+
 
 
 export const SignUpForm = () => {
+    const { store, actions } = useContext(Context);
+    const history = useNavigate();
+
+    const [inputUSuario, SetInputUsuario] = useState({
+        email: "",
+        password: ""
+    })
+
+    const handleChange = (evento) => {
+        console.log('evento.target: ', evento.target.value);
+        const { id, value } = evento.target;
+        SetInputUsuario(copiaDelUsuario => ({
+            ...copiaDelUsuario,
+            [id]: value
+        }))
+
+    }
+
+
+    const handleSubmit = (evento) => {
+        evento.preventDefault()
+        console.log('usuario', inputUSuario);
+        actions.guardarUsuario(inputUSuario)
+        history("/")
+    }
 
     return (
-        <form>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email (Usuario) </label>
-                <input type="text" class="form-control" id="email" aria-describedby="apellido2" />
+        <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">Email (Usuario) </label>
+                <input type="text" className="form-control" id="email" aria-describedby="apellido2" onChange={handleChange}/>
             </div>
-            <div class="mb-3">
-                <label for="password" class="form-label"> Password </label>
-                <input type="password" class="form-control" id="password" aria-describedby="apellido2" />
-            </div>
-
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" aria-describedby="nombre" />
-            </div>
-            <div class="mb-3">
-                <label for="apellido1" class="form-label">Primer apellido</label>
-                <input type="text" class="form-control" id="apellido1" aria-describedby="apellido1" />
-            </div>
-            <div class="mb-3">
-                <label for="apellido2" class="form-label">Segundo apellido</label>
-                <input type="text" class="form-control" id="apellido2" aria-describedby="apellido2" />
+            <div className="mb-3">
+                <label htmlFor="password" className="form-label"> Password </label>
+                <input type="password" className="form-control" id="password" aria-describedby="password" onChange={handleChange} />
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+            <button type="submit" className="btn btn-primary">Submit</button>
         </form>
     )
 }

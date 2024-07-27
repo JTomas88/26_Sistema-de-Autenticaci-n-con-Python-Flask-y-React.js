@@ -28,7 +28,7 @@ def handle_hello():
 
 # Crea una ruta para autenticar a los usuarios y devolver el token JWT
 # La función create_access_token() se utiliza para generar el JWT
-@api.route("/token", methods=["POST", "GET"])
+@api.route("/token", methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -42,7 +42,28 @@ def create_token():
     
     # Crea un nuevo token con el id de usuario dentro
     access_token = create_access_token(identity=user.id)
-    return jsonify({ "token": access_token, "user_id": user.id })
+    return jsonify({ "token": access_token, "user_id": user.id }), 201
+
+
+@api.route("/guardarUsuario", methods=["POST"])
+def guardarUsuarioBe():
+    try:
+        email = request.json.get("email", None)
+        password = request.json.get("password", None)
+        is_active = True
+        
+        if not email or not password:
+            return jsonify({"msg": "Email and password are required"}), 400
+
+        new_user = User(email=email, password=password, is_active=is_active)
+        db.session.add(new_user)
+        db.session.commit()
+        
+        return jsonify({"msg": "User created successfully"}), 201
+    except Exception as e:
+        return jsonify({"msg": str(e)}), 500
+
+
 
 
 # Protege una ruta con jwt_required, bloquea las peticiones sin un JWT válido
